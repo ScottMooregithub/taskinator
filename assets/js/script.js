@@ -3,7 +3,7 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 var taskIdCounter = 0;
 var pageContentEl = document.querySelector("#page-content");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
-var tasksCompleteEl = document.querySelector("#tasks-complete");
+var tasksCompletedEl = document.querySelector("#tasks-complete");
 
 var taskFormhandler = function (event) {
   event.preventDefault();
@@ -22,11 +22,8 @@ var taskFormhandler = function (event) {
   //has data attribute so get task id and all functions to complete edit process
   if (isEdit) {
     var taskId = formEl.getAttribute("data-task-id");
-    completeEditTask(taskName, taskTypeInput, taskId);
-  }
-
-  //no data attribut, so create object as normal and pass to createTaskEl function
-  else {
+    completeEditTask(taskNameInput, taskTypeInput, taskId);
+  } else {
     var taskDataObj = {
       name: taskNameInput,
       type: taskTypeInput,
@@ -83,7 +80,7 @@ var createTaskEl = function (taskDataObj) {
   listItemEl.appendChild(taskInfoEl);
 
   // add entire lis item to list
-  taskToDoEl.appendChild(listItemEl);
+  tasksToDoEl.appendChild(listItemEl);
   taskIdCounter++;
 };
 //create edit button
@@ -113,7 +110,7 @@ var createTaskActions = function (taskId) {
 
   actionContainerEl.appendChild(statusSeleftEl);
 
-  var statusChoices = ["To Do", "In Progress", "completed"];
+  var statusChoices = ["to Do", "in Progress", "completed"];
 
   for (var i = 0; i < statusChoices.length; i++) {
     //create option element
@@ -183,7 +180,7 @@ var taskStatusChangeHandler = function (event) {
 
   // find the parent task item element basedon the id
   var taskSelected = document.querySelector(
-    ".task-item[data-task-id'" + taskId + "']"
+    ".task-item[data-task-id='" + taskId + "']"
   );
 
   if (statusValue === "to do") {
@@ -191,7 +188,7 @@ var taskStatusChangeHandler = function (event) {
   } else if (statusValue === "in progress") {
     tasksInProgressEl.appendChild(taskSelected);
   } else if (statusValue === "completed") {
-    tasksCompleteEl.appendChild(taskSelected);
+    tasksCompletedEl.appendChild(taskSelected);
   }
 };
 
