@@ -208,7 +208,7 @@ var taskStatusChangeHandler = function (event) {
   // get the task items id
   var taskId = event.target.getAttribute("data-task-id");
 
-  //get teh currently selected options value and convert to lowercase
+  //get the currently selected options value and convert to lowercase
   var statusValue = event.target.value.toLowerCase();
 
   // find the parent task item element basedon the id
@@ -239,9 +239,19 @@ var saveTasks = function () {
 };
 
 var loadTask = function () {
-  var getArray = JSON.parse(localStorage.getItem("getArray"));
-};
+  var savedTasks = localStorage.getItem("tasks");
 
+  if (!savedTasks) {
+    return false;
+  }
+
+  savedTasks = JSON.parse(savedTasks);
+
+  for (var i = 0; i < savedTasks.length; i++) {
+    createTaskEl(savedTasks[i]);
+  }
+};
+loadTask();
 pageContentEl.addEventListener("click", taskButtonHandler);
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
